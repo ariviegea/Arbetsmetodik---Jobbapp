@@ -81,6 +81,12 @@ const View = (function(){
                 jobCard +=`
                 <div>
                     <h2>${job.annonsrubrik}</h2>
+                    <p>${job.lan}</p>
+                    <p>${job.kommunnamn}</p>
+                    <p>${job.publiceraddatum}</p>
+                    <p>${job.annonsurl}</p>
+                    <p>${job.sista_ansokningsdag}</p>
+                    <button id='${job.annonsid}'>Read more</button>
                 </div>
                 `;
             }
