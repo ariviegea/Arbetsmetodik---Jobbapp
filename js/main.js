@@ -45,8 +45,25 @@ const Model = (function(){
     }
 }());
 
-const Controller = (function(){
+const Controller = (function(){    
     return{
+        bindHomePageEventListeners: function(){
+            const searchInput = document.getElementById('searchInput');
+            const searchButton = document.getElementById('searchButton');
+            
+            searchInput.addEventListener('keyUp', function(){
+            let searchQuery = searchInput.value;
+                
+            });
+            
+            searchButton.addEventListener('click', function(event){
+                //Prevent refreshing page while searching
+                event.preventDefault();
+                searchQuery = searchInput.value;
+                Fetch.fetchJobSearch(searchQuery);
+            });
+            
+    }
 
     }
 }());
