@@ -5,7 +5,7 @@ To do list:
 Functionality
 1. User access site - view 10 latest jobs.
 2. User can search by title of job. (Branch: display_list).
-3. User can click an especific add and view the full description.
+3. User can click an especific add and view the full description.(Branch: display_list)
 
 
 ----------------------------
