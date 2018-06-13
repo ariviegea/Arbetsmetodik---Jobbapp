@@ -11,8 +11,33 @@ const Fetch = {
             .catch((error) => {
                 console.log(error);
             });
-    }
+    },
+    fetchJobSearch(searchQuery) {
+        fetch(`http://api.arbetsformedlingen.se/af/v0/platsannonser/soklista/yrken/${searchQuery}`)
+        .then((response) => response.json())
+        .then((jobs) => {
+            console.log(jobs);
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+    },
+    fetchOneJob(id){
+        fetch(`http://api.arbetsformedlingen.se/af/v0/platsannonser/${id}`)
+        .then((response) => response.json())
+        .then((jobs) => {
+            console.log(jobs);
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+    },
+
+
+
+
 }
+
 
 const Model = (function(){
     return{
