@@ -1,8 +1,8 @@
 //api key
 
 //fetchAll
-const Fetch = {
-    fetchAllJobs() {
+const FetchJobs = {
+    fetchAll() {
         fetch(`http://api.arbetsformedlingen.se/af/v0/platsannonser/matchning?nyckelord=sverige&sida=1&antalrader=10`)
             .then((response) => response.json())
             .then((jobs) => {
@@ -13,7 +13,7 @@ const Fetch = {
                 console.log(error);
             });
     },
-    fetchJobSearch(searchQuery) {
+    fetchSearched(searchQuery) {
         fetch(`http://api.arbetsformedlingen.se/af/v0/platsannonser/soklista/yrken/${searchQuery}`)
         .then((response) => response.json())
         .then((jobs) => {
@@ -24,7 +24,7 @@ const Fetch = {
             console.log(error);
         });
     },
-    fetchOneJob(id){
+    fetchOne(id){
         fetch(`http://api.arbetsformedlingen.se/af/v0/platsannonser/${id}`)
         .then((response) => response.json())
         .then((job) => {
@@ -34,6 +34,17 @@ const Fetch = {
             console.log(error);
         });
     },
+    fetchCategory(id){
+        fetch(`http://api.arbetsformedlingen.se/af/v0/platsannonser/matchning?yrkesid=${id}&antalrader=10`)
+        .then((response) => response.json())
+            .then((jobs) => {
+                console.log('kategori');
+                View.displayJobs(jobs);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }
 }
 
 
@@ -79,11 +90,12 @@ const View = (function(){
                 jobCard +=`
                     <div>
                         <h2>${job.namn}</h2>
-                        <button class="readmore-button" data-id="${job.id}">Go to ads</button>
+                        <button class="category-button" data-id="${job.id}">Go to category</button>
                     </div>
                 `;
             }
             jobList.innerHTML = jobCard;
+            Controller.bindJobListEventListeners();
         },
         displayOne: function(job){
             job = job.platsannons.annons;
@@ -120,7 +132,7 @@ const Controller = (function(){
                 //Prevent refreshing page while searching
                 event.preventDefault();
                 searchQuery = searchInput.value;
-                Fetch.fetchJobSearch(searchQuery);
+                FetchJobs.fetchSearched(searchQuery);
             });
 
 
@@ -134,13 +146,19 @@ const Controller = (function(){
                     let jobId = button.dataset.id;
                     
                     button.addEventListener('click', function(){
-                        Fetch.fetchOneJob(jobId);
+                        FetchJobs.fetchOne(jobId);
                     });
                 }
-            }
+            else if (button.classList.contains('category-button')){
+                    let categoryId = button.dataset.id;
+                    
+                    button.addEventListener('click', function(){
+                        FetchJobs.fetchCategory(categoryId);
+                    });
+            }}
         }
     }
 }());
 
-Fetch.fetchAllJobs();
+FetchJobs.fetchAll();
 Controller.bindEventListeners();
