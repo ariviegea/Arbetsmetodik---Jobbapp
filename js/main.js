@@ -64,13 +64,15 @@ const View = (function(){
             for(let job of jobs.matchningslista.matchningdata) {
                 jobCard +=`
                     <div>
+                        <br>
                         <h2>${job.annonsrubrik}</h2>
-                        <p>${job.lan}</p>
-                        <p>${job.kommunnamn}</p>
-                        <p>${job.publiceraddatum}</p>
-                        <p>${job.annonsurl}</p>
-                        <p>${job.sista_ansokningsdag}</p>
+                        <p>County: ${job.lan}</p>
+                        <p>City: ${job.kommunnamn}</p>
+                        <p>Published on: ${job.publiceraddatum}</p>
+                        
+                        <p> Last application date: ${job.sista_ansokningsdag} </p>
                         <button class="readmore-button" data-id="${job.annonsid}">Read more</button>
+                        <hr>
                     </div>
                 `;
             }
@@ -87,6 +89,7 @@ const View = (function(){
                     <div>
                         <h2>${job.namn}</h2>
                         <button class="category-button" data-id="${job.id}">Go to category</button>
+                        <hr>
                     </div>
                 `;
             }
