@@ -106,9 +106,11 @@ const View = (function(){
                     <p>${job.platsannonsUrl}</p>
                     <p>${job.publiceraddatum}</p>
                 </div>
+                <button class="back-button">Back</button>
             `;
 
             jobList.innerHTML = jobCard;
+            Controller.bindButtonsEventListeners();
         }
     }
 }());
@@ -153,7 +155,14 @@ const Controller = (function(){
                     button.addEventListener('click', function(){
                         FetchJobs.fetchCategory(categoryId);
                     });
-            }}
+
+                }else if(button.classList.contains('back-button')){
+                        //let x = button.dataset.id;
+                    button.addEventListener('click', function(){
+                        FetchJobs.fetchAll();
+                    });
+                }
+            }
         }
     }
 }());
