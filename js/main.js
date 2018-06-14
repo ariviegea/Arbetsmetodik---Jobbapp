@@ -57,6 +57,7 @@ const View = (function(){
     const jobList = document.getElementById('jobList');
 
     return{
+        
         displayJobs: function(jobs) {
             let jobCard = '';
 
@@ -73,12 +74,11 @@ const View = (function(){
                     </div>
                 `;
             }
+            
             jobList.innerHTML = jobCard;
-
-            //bind the eventlisteners here when buttons are in DOM
-            Controller.bindJobListEventListeners();
+            Controller.bindButtonsEventListeners();
         },
-        //BUTTON NOT WORKING
+        
         displaySearched: function(jobs) {
             let jobCard = '';
 
@@ -93,6 +93,7 @@ const View = (function(){
             jobList.innerHTML = jobCard;
             Controller.bindJobListEventListeners();
         },
+        
         displayOne: function(job){
             job = job.platsannons.annons;
             let jobCard = '';
@@ -109,43 +110,44 @@ const View = (function(){
 
             jobList.innerHTML = jobCard;
         }
-    //displayAll
     }
 }());
 
 const Controller = (function(){    
     return{
-        bindEventListeners: function(){
+        
+        bindSearchEventListeners: function(){
             const searchInput = document.getElementById('searchInput');
             const searchButton = document.getElementById('searchButton');
             
             searchInput.addEventListener('keyup', function(){
-            let searchQuery = searchInput.value;
-                
+                let searchQuery = searchInput.value;     
             });
             
             searchButton.addEventListener('click', function(event){
                 //Prevent refreshing page while searching
                 event.preventDefault();
                 searchQuery = searchInput.value;
+                
                 FetchJobs.fetchSearched(searchQuery);
             });
 
 
         },
 
-        bindJobListEventListeners: function(){
+        bindButtonsEventListeners: function(){
             const buttons = document.querySelectorAll('button');
 
             for(let button of buttons){
+                
                 if(button.classList.contains('readmore-button')){
                     let jobId = button.dataset.id;
                     
                     button.addEventListener('click', function(){
                         FetchJobs.fetchOne(jobId);
                     });
-                }
-            else if (button.classList.contains('category-button')){
+                } 
+                else if (button.classList.contains('category-button')){
                     let categoryId = button.dataset.id;
                     
                     button.addEventListener('click', function(){
@@ -157,4 +159,4 @@ const Controller = (function(){
 }());
 
 FetchJobs.fetchAll();
-Controller.bindEventListeners();
+Controller.bindSearchEventListeners();
