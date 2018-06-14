@@ -18,7 +18,7 @@ const Fetch = {
         .then((response) => response.json())
         .then((jobs) => {
             console.log('search');
-            View.displayJobs(jobs);
+            View.displaySearched(jobs);
         })
         .catch((error) => {
             console.log(error);
@@ -28,16 +28,12 @@ const Fetch = {
         fetch(`http://api.arbetsformedlingen.se/af/v0/platsannonser/${id}`)
         .then((response) => response.json())
         .then((job) => {
-            console.log(job);
+            View.displayOne(job);
         })
         .catch((error) => {
             console.log(error);
         });
     },
-
-
-
-
 }
 
 
@@ -57,7 +53,6 @@ const View = (function(){
             let jobCard = '';
 
             for(let job of jobs.matchningslista.matchningdata) {
-                console.log(job);
                 jobCard +=`
                     <div>
                         <h2>${job.annonsrubrik}</h2>
@@ -74,6 +69,37 @@ const View = (function(){
 
             //bind the eventlisteners here when buttons are in DOM
             Controller.bindJobListEventListeners();
+        },
+        //BUTTON NOT WORKING
+        displaySearched: function(jobs) {
+            let jobCard = '';
+
+            for(let job of jobs.soklista.sokdata) {
+                console.log(job);
+                jobCard +=`
+                    <div>
+                        <h2>${job.namn}</h2>
+                        <button class="readmore-button" data-id="${job.id}">Go to ads</button>
+                    </div>
+                `;
+            }
+            jobList.innerHTML = jobCard;
+        },
+        displayOne: function(job){
+            job = job.platsannons.annons;
+            let jobCard = '';
+
+            jobCard +=`
+                <div>
+                    <h2>${job.annonsrubrik}</h2>
+                    <p>${job.annonstext}</p>
+                    <p>${job.kommunnamn}</p>
+                    <p>${job.platsannonsUrl}</p>
+                    <p>${job.sista_ansokningsdag}</p>
+                </div>
+            `;
+
+            jobList.innerHTML = jobCard;
         }
     //displayAll
     }
