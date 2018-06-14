@@ -91,7 +91,7 @@ const View = (function(){
                 `;
             }
             jobList.innerHTML = jobCard;
-            Controller.bindJobListEventListeners();
+            Controller.bindButtonsEventListeners();
         },
         
         displayOne: function(job){
@@ -104,7 +104,7 @@ const View = (function(){
                     <p>${job.annonstext}</p>
                     <p>${job.kommunnamn}</p>
                     <p>${job.platsannonsUrl}</p>
-                    <p>${job.sista_ansokningsdag}</p>
+                    <p>${job.publiceraddatum}</p>
                 </div>
             `;
 
