@@ -8,21 +8,15 @@
     <link rel="stylesheet" href="css/style.css"> 
     <title>Look for jobs</title>
 </head>
-<!-- <style>
-    body{
-    margin:0px;
-    padding:0px;
-    background-color:yellow;
-}
-</style> -->
 <body>
     <header>
          <div class="search-nav">
             <ul>
-                <li><h1>Hitta hit din dröm jobb</h1></li>
+                <li><h1>Find jobs in Sweden</h1></li>
                 <li>
                         <form>
-                                <input id="searchInput" type="text" placeholder="Search for jobs here"><button id="searchButton">Search</button>
+                                <input id="searchInput" type="text" placeholder="Search for jobs here">
+                                <button id="searchButton">Search</button>
                         </form>
                 </li>            
             </ul>
@@ -30,17 +24,21 @@
     </header>
 
     
+<div class="container">
+    <div class="job-card">
+        <div id="searchResults">
+            <!--Generated with JS-->
+        </div>
+
+        <div id="jobList">
+            <!--Generated with JS-->
+        </div>
+    </div>
+</div>
     
-    <div id="searchResults">
-        <!--Generated with JS-->
-    </div>
-
-    <div id="jobList">
-        <!--Generated with JS-->
-    </div>
-
+    
+<!-- Scripts -->
     <script src="js/main.js"></script>
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
