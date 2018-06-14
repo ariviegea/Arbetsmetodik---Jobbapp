@@ -9,7 +9,7 @@ const FetchJobs = {
                 View.displayJobs(jobs);
             })
             .catch((error) => {
-                console.log(error);
+                alert('Oops! Something went wrong.')
             });
     },
     fetchSearched(searchQuery) {
@@ -19,7 +19,7 @@ const FetchJobs = {
             View.displaySearched(jobs);
         })
         .catch((error) => {
-            console.log(error);
+            alert('You have searched for a job-category that does not exist in our database. Please try again!');
         });
     },
     fetchOne(id){
@@ -29,7 +29,7 @@ const FetchJobs = {
             View.displayOne(job);
         })
         .catch((error) => {
-            console.log(error);
+            alert('Oops! The ad you clicked does not exist anymore.');
         });
     },
     fetchCategory(id){
@@ -39,7 +39,7 @@ const FetchJobs = {
                 View.displayJobs(jobs);
             })
             .catch((error) => {
-                console.log(error);
+                alert ('Oops! Something went wrong.')
             });
     }
 }
