@@ -7,7 +7,7 @@ const FetchJobs = {
             .then((response) => response.json())
             .then((jobs) => {
                 console.log('Alla job');
-                View.displayJobs(jobs);
+                View.displayJobs(jobs, true);
             })
             .catch((error) => {
                 console.log(error);
@@ -60,7 +60,7 @@ const View = (function(){
     const jobList = document.getElementById('jobList');
 
     return{
-        displayJobs: function(jobs) {
+        displayJobs: function(jobs, all) {
             let jobCard = '';
 
             for(let job of jobs.matchningslista.matchningdata) {
