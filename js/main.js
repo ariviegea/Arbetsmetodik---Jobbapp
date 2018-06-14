@@ -18,7 +18,11 @@ const Fetch = {
         .then((response) => response.json())
         .then((jobs) => {
             console.log('search');
+<<<<<<< HEAD
             View.displayJobs(jobs, false);
+=======
+            View.displaySearched(jobs);
+>>>>>>> e21ce2520d5b069f870075dce29d70e04d3f2ab1
         })
         .catch((error) => {
             console.log(error);
@@ -28,16 +32,12 @@ const Fetch = {
         fetch(`http://api.arbetsformedlingen.se/af/v0/platsannonser/${id}`)
         .then((response) => response.json())
         .then((job) => {
-            console.log(job);
+            View.displayOne(job);
         })
         .catch((error) => {
             console.log(error);
         });
     },
-
-
-
-
 }
 
 
@@ -55,6 +55,7 @@ const View = (function(){
     return{
         displayJobs: function(jobs, all) {
             let jobCard = '';
+<<<<<<< HEAD
             console.log(all);
     /* We dont need anymore if an else maybe lets check tomorrow */
         if (all){
@@ -67,6 +68,10 @@ const View = (function(){
                 
                 for(let job of jobs) {
                 console.log(job);
+=======
+
+            for(let job of jobs.matchningslista.matchningdata) {
+>>>>>>> e21ce2520d5b069f870075dce29d70e04d3f2ab1
                 jobCard +=`
                     <div>
                         <h2>${job.annonsrubrik}</h2>
@@ -83,6 +88,37 @@ const View = (function(){
 
             //bind the eventlisteners here when buttons are in DOM
             Controller.bindJobListEventListeners();
+        },
+        //BUTTON NOT WORKING
+        displaySearched: function(jobs) {
+            let jobCard = '';
+
+            for(let job of jobs.soklista.sokdata) {
+                console.log(job);
+                jobCard +=`
+                    <div>
+                        <h2>${job.namn}</h2>
+                        <button class="readmore-button" data-id="${job.id}">Go to ads</button>
+                    </div>
+                `;
+            }
+            jobList.innerHTML = jobCard;
+        },
+        displayOne: function(job){
+            job = job.platsannons.annons;
+            let jobCard = '';
+
+            jobCard +=`
+                <div>
+                    <h2>${job.annonsrubrik}</h2>
+                    <p>${job.annonstext}</p>
+                    <p>${job.kommunnamn}</p>
+                    <p>${job.platsannonsUrl}</p>
+                    <p>${job.sista_ansokningsdag}</p>
+                </div>
+            `;
+
+            jobList.innerHTML = jobCard;
         }
     //displayAll
     }
