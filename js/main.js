@@ -167,7 +167,7 @@ const Controller = (function(){
                 }
             }
         }
-    }
+    };
 }());
 
 FetchJobs.fetchAll();
