@@ -6,7 +6,6 @@ const FetchJobs = {
         fetch(`http://api.arbetsformedlingen.se/af/v0/platsannonser/matchning?nyckelord=sverige&sida=1&antalrader=10`)
             .then((response) => response.json())
             .then((jobs) => {
-                console.log('Alla job');
                 View.displayJobs(jobs);
             })
             .catch((error) => {
@@ -17,7 +16,6 @@ const FetchJobs = {
         fetch(`http://api.arbetsformedlingen.se/af/v0/platsannonser/soklista/yrken/${searchQuery}`)
         .then((response) => response.json())
         .then((jobs) => {
-            console.log('search');
             View.displaySearched(jobs);
         })
         .catch((error) => {
@@ -38,7 +36,6 @@ const FetchJobs = {
         fetch(`http://api.arbetsformedlingen.se/af/v0/platsannonser/matchning?yrkesid=${id}&antalrader=10`)
         .then((response) => response.json())
             .then((jobs) => {
-                console.log('kategori');
                 View.displayJobs(jobs);
             })
             .catch((error) => {
@@ -86,7 +83,6 @@ const View = (function(){
             let jobCard = '';
 
             for(let job of jobs.soklista.sokdata) {
-                console.log(job);
                 jobCard +=`
                     <div>
                         <h2>${job.namn}</h2>
