@@ -18,11 +18,7 @@ const Fetch = {
         .then((response) => response.json())
         .then((jobs) => {
             console.log('search');
-<<<<<<< HEAD
-            View.displayJobs(jobs, false);
-=======
             View.displaySearched(jobs);
->>>>>>> e21ce2520d5b069f870075dce29d70e04d3f2ab1
         })
         .catch((error) => {
             console.log(error);
@@ -55,23 +51,8 @@ const View = (function(){
     return{
         displayJobs: function(jobs, all) {
             let jobCard = '';
-<<<<<<< HEAD
-            console.log(all);
-    /* We dont need anymore if an else maybe lets check tomorrow */
-        if (all){
-            jobs = jobs.matchningslista.matchningdata;
-        }
-            else {
-                console.log(jobs.soklista.sokdata);
-                jobs = jobs.soklista.sokdata;
-            } 
-                
-                for(let job of jobs) {
-                console.log(job);
-=======
 
             for(let job of jobs.matchningslista.matchningdata) {
->>>>>>> e21ce2520d5b069f870075dce29d70e04d3f2ab1
                 jobCard +=`
                     <div>
                         <h2>${job.annonsrubrik}</h2>
