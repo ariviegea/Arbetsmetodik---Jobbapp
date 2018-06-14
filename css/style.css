@@ -10,7 +10,7 @@ body{
     margin:0px;
     padding:10px;
     list-style: none;
-    background-image: url("/images/stockholm-848255_1920.jpg");
+    background-image: url("../images/stockholm-848255_1920.jpg");
     background-size:cover;
 }
 .search-nav ul li{
