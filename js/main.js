@@ -55,6 +55,23 @@ const Model = (function(){
     }
 }());
 
+getJobs = function() {
+    var url = `http://api.arbetsformedlingen.se/af/v0/platsannonser/matchning?nyckelord=sverige&sida=1&antalrader=10`;
+    if ('caches' in window) {
+      caches.match(url).then(function (response) {
+        if (response) {
+          response.json().then(function updateFromCache(json) {
+            var results = json;
+            results.created = new Date();
+            View.displayJobs(results);
+          })
+        }
+      });
+    }
+}
+
+getJobs();
+
 
 
 const View = (function(){
@@ -182,6 +199,15 @@ const Controller = (function(){
         }
     };
 }());
+
+
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker
+             .register('../service-worker.js')
+             .then(function() {
+               console.log('Service Worker Registered');
+             })
+  }
 
 FetchJobs.fetchAll();
 Controller.bindSearchEventListeners();
