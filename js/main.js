@@ -1,5 +1,9 @@
 //api key
 
+const app = {
+    isLoading: true
+}
+
 //fetchAll
 const FetchJobs = {
     fetchAll() {
@@ -55,6 +59,8 @@ const Model = (function(){
 
 const View = (function(){
     const jobList = document.getElementById('jobList');
+    const jobCardContainer = document.getElementById('jobCardContainer');
+    const spinner = document.getElementById('spinner');
 
     return{
         
@@ -79,6 +85,13 @@ const View = (function(){
             
             jobList.innerHTML = jobCard;
             Controller.bindButtonsEventListeners();
+
+
+            //if data is loading, show spinner to let user know its loading
+            if(app.isLoading){
+                spinner.classList.remove('hidden');
+                jobCardContainer.classList.add('hidden');
+            }
         },
         
         displaySearched: function(jobs) {
