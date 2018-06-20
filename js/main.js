@@ -7,43 +7,54 @@ const app = {
 //fetchAll
 const FetchJobs = {
     fetchAll() {
+        View.showSpinner(true);
         fetch(`http://api.arbetsformedlingen.se/af/v0/platsannonser/matchning?nyckelord=sverige&sida=1&antalrader=10`)
             .then((response) => response.json())
             .then((jobs) => {
                 View.displayJobs(jobs);
+                View.showSpinner(false);
             })
             .catch((error) => {
                 console.log(error);
+                View.showSpinner(false);
             });
     },
     fetchSearched(searchQuery) {
+        View.showSpinner(true);
         fetch(`http://api.arbetsformedlingen.se/af/v0/platsannonser/soklista/yrken/${searchQuery}`)
         .then((response) => response.json())
         .then((jobs) => {
             View.displaySearched(jobs);
+            View.showSpinner(false);
         })
         .catch((error) => {
             console.log(error);
         });
     },
     fetchOne(id){
+        View.showSpinner(true);
         fetch(`http://api.arbetsformedlingen.se/af/v0/platsannonser/${id}`)
         .then((response) => response.json())
         .then((job) => {
             View.displayOne(job);
+            View.showSpinner(false);
         })
         .catch((error) => {
             console.log(error);
+            View.showSpinner(false);
         });
     },
     fetchCategory(id){
+        View.showSpinner(true);
         fetch(`http://api.arbetsformedlingen.se/af/v0/platsannonser/matchning?yrkesid=${id}&antalrader=10`)
         .then((response) => response.json())
             .then((jobs) => {
                 View.displayJobs(jobs);
+                View.showSpinner(false);
             })
             .catch((error) => {
                 console.log(error);
+                View.showSpinner(false);
             });
     }
 }
@@ -55,7 +66,7 @@ const Model = (function(){
     }
 }());
 
-getJobs = function() {
+/*getJobs = function() {
     var url = `http://api.arbetsformedlingen.se/af/v0/platsannonser/matchning?nyckelord=sverige&sida=1&antalrader=10`;
     if ('caches' in window) {
       caches.match(url).then(function (response) {
@@ -72,7 +83,7 @@ getJobs = function() {
 
 getJobs();
 
-
+*/
 
 const View = (function(){
     const jobList = document.getElementById('jobList');
@@ -80,7 +91,16 @@ const View = (function(){
     const spinner = document.getElementById('spinner');
 
     return{
-        
+        showSpinner: function(show) {
+            // Show spinner
+            if (show) {
+              spinner.classList.remove('hidden');
+              jobCardContainer.classList.add('hidden');     
+            } else {
+              spinner.classList.add('hidden');
+              jobCardContainer.classList.remove('hidden');  
+            }
+          },
         displayJobs: function(jobs) {
             let jobCard = '';
 
@@ -105,10 +125,10 @@ const View = (function(){
 
 
             //if data is loading, show spinner to let user know its loading
-            if(app.isLoading){
-                spinner.classList.remove('hidden');
-                jobCardContainer.classList.add('hidden');
-            }
+            //if(app.isLoading){
+            //    spinner.classList.remove('hidden');
+            //    jobCardContainer.classList.add('hidden');
+            //}
         },
         
         displaySearched: function(jobs) {
@@ -203,11 +223,14 @@ const Controller = (function(){
 
 if ('serviceWorker' in navigator) {
     navigator.serviceWorker
-             .register('../service-worker.js')
+             .register('service-worker.js')
              .then(function() {
                console.log('Service Worker Registered');
+                FetchJobs.fetchAll();
+                Controller.bindSearchEventListeners();
              })
-  }
+} else {
+    FetchJobs.fetchAll();
+    Controller.bindSearchEventListeners();
+}
 
-FetchJobs.fetchAll();
-Controller.bindSearchEventListeners();
