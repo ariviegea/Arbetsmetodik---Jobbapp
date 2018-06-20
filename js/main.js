@@ -1,5 +1,4 @@
 //api key
-
 const app = {
     isLoading: true
 }
@@ -22,32 +21,32 @@ const FetchJobs = {
     fetchSearched(searchQuery) {
         View.showSpinner(true);
         fetch(`http://api.arbetsformedlingen.se/af/v0/platsannonser/soklista/yrken/${searchQuery}`)
-        .then((response) => response.json())
-        .then((jobs) => {
-            View.displaySearched(jobs);
-            View.showSpinner(false);
-        })
-        .catch((error) => {
-            console.log(error);
-        });
+            .then((response) => response.json())
+            .then((jobs) => {
+                View.displaySearched(jobs);
+                View.showSpinner(false);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     },
-    fetchOne(id){
+    fetchOne(id) {
         View.showSpinner(true);
         fetch(`http://api.arbetsformedlingen.se/af/v0/platsannonser/${id}`)
-        .then((response) => response.json())
-        .then((job) => {
-            View.displayOne(job);
-            View.showSpinner(false);
-        })
-        .catch((error) => {
-            console.log(error);
-            View.showSpinner(false);
-        });
+            .then((response) => response.json())
+            .then((job) => {
+                View.displayOne(job);
+                View.showSpinner(false);
+            })
+            .catch((error) => {
+                console.log(error);
+                View.showSpinner(false);
+            });
     },
-    fetchCategory(id){
+    fetchCategory(id) {
         View.showSpinner(true);
         fetch(`http://api.arbetsformedlingen.se/af/v0/platsannonser/matchning?yrkesid=${id}&antalrader=10`)
-        .then((response) => response.json())
+            .then((response) => response.json())
             .then((jobs) => {
                 View.displayJobs(jobs);
                 View.showSpinner(false);
@@ -60,8 +59,8 @@ const FetchJobs = {
 }
 
 
-const Model = (function(){
-    return{
+const Model = (function() {
+    return {
         //handle whats being fetched
     }
 }());
@@ -85,27 +84,27 @@ getJobs();
 
 */
 
-const View = (function(){
+const View = (function() {
     const jobList = document.getElementById('jobList');
     const jobCardContainer = document.getElementById('jobCardContainer');
     const spinner = document.getElementById('spinner');
 
-    return{
+    return {
         showSpinner: function(show) {
             // Show spinner
             if (show) {
-              spinner.classList.remove('hidden');
-              jobCardContainer.classList.add('hidden');     
+                spinner.classList.remove('hidden');
+                jobCardContainer.classList.add('hidden');
             } else {
-              spinner.classList.add('hidden');
-              jobCardContainer.classList.remove('hidden');  
+                spinner.classList.add('hidden');
+                jobCardContainer.classList.remove('hidden');
             }
-          },
+        },
         displayJobs: function(jobs) {
             let jobCard = '';
 
-            for(let job of jobs.matchningslista.matchningdata) {
-                jobCard +=`
+            for (let job of jobs.matchningslista.matchningdata) {
+                jobCard += `
                     <div>
                         <br>
                         <h2>${job.annonsrubrik}</h2>
@@ -119,7 +118,7 @@ const View = (function(){
                     </div>
                 `;
             }
-            
+
             jobList.innerHTML = jobCard;
             Controller.bindButtonsEventListeners();
 
@@ -130,12 +129,12 @@ const View = (function(){
             //    jobCardContainer.classList.add('hidden');
             //}
         },
-        
+
         displaySearched: function(jobs) {
             let jobCard = '';
 
-            for(let job of jobs.soklista.sokdata) {
-                jobCard +=`
+            for (let job of jobs.soklista.sokdata) {
+                jobCard += `
                     <div>
                         <h2>${job.namn}</h2>
                         <button class="category-button" data-id="${job.id}">Go to category</button>
@@ -146,12 +145,12 @@ const View = (function(){
             jobList.innerHTML = jobCard;
             Controller.bindButtonsEventListeners();
         },
-        
-        displayOne: function(job){
+
+        displayOne: function(job) {
             job = job.platsannons.annons;
             let jobCard = '';
 
-            jobCard +=`
+            jobCard += `
                 <div>
                     <h2>${job.annonsrubrik}</h2>
                     <p>${job.annonstext}</p>
@@ -168,50 +167,49 @@ const View = (function(){
     }
 }());
 
-const Controller = (function(){    
-    return{
-        
-        bindSearchEventListeners: function(){
+const Controller = (function() {
+    return {
+
+        bindSearchEventListeners: function() {
             const searchInput = document.getElementById('searchInput');
             const searchButton = document.getElementById('searchButton');
-            
-            searchInput.addEventListener('keyup', function(){
-                let searchQuery = searchInput.value;     
+
+            searchInput.addEventListener('keyup', function() {
+                let searchQuery = searchInput.value;
             });
-            
-            searchButton.addEventListener('click', function(event){
+
+            searchButton.addEventListener('click', function(event) {
                 //Prevent refreshing page while searching
                 event.preventDefault();
                 searchQuery = searchInput.value;
-                
+
                 FetchJobs.fetchSearched(searchQuery);
             });
 
 
         },
 
-        bindButtonsEventListeners: function(){
+        bindButtonsEventListeners: function() {
             const buttons = document.querySelectorAll('button');
 
-            for(let button of buttons){
-                
-                if(button.classList.contains('readmore-button')){
+            for (let button of buttons) {
+
+                if (button.classList.contains('readmore-button')) {
                     let jobId = button.dataset.id;
-                    
-                    button.addEventListener('click', function(){
+
+                    button.addEventListener('click', function() {
                         FetchJobs.fetchOne(jobId);
                     });
-                } 
-                else if (button.classList.contains('category-button')){
+                } else if (button.classList.contains('category-button')) {
                     let categoryId = button.dataset.id;
-                    
-                    button.addEventListener('click', function(){
+
+                    button.addEventListener('click', function() {
                         FetchJobs.fetchCategory(categoryId);
                     });
 
-                }else if(button.classList.contains('back-button')){
-                        //let x = button.dataset.id;
-                    button.addEventListener('click', function(){
+                } else if (button.classList.contains('back-button')) {
+                    //let x = button.dataset.id;
+                    button.addEventListener('click', function() {
                         FetchJobs.fetchAll();
                     });
                 }
@@ -223,14 +221,13 @@ const Controller = (function(){
 
 if ('serviceWorker' in navigator) {
     navigator.serviceWorker
-             .register('service-worker.js')
-             .then(function() {
-               console.log('Service Worker Registered');
-                FetchJobs.fetchAll();
-                Controller.bindSearchEventListeners();
-             })
+        .register('service-worker.js')
+        .then(function() {
+            console.log('Service Worker Registered');
+            FetchJobs.fetchAll();
+            Controller.bindSearchEventListeners();
+        })
 } else {
     FetchJobs.fetchAll();
     Controller.bindSearchEventListeners();
 }
-
